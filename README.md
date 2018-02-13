@@ -6,7 +6,7 @@ All'accensione il led rosso lampeggia per circa 5 secondi e se al termine il bot
 
 Contemporaneamente alla modalità AP, sull'ESP sarà attivato un server http che darà accesso a due risorse html (salvate nel FS mediante il tool di upload accessibile dal menù Strumenti dell'IDE) contenenti le form da riempire con i dati scelti dall'utente. 
 
-Per approfondimenti, sulla programmazione dell'ESP8266 mediante Arduino IDE, si può fare riferimento alla repository del progetto reperibile all'indirizzo:
+Per approfondimenti, sulla programmazione dell'ESP8266 mediante Arduino IDE, si può fare riferimento alla repository del progetto che è  reperibile all'indirizzo:
 
 https://github.com/esp8266/Arduino
 
