@@ -13,10 +13,8 @@
 const char* MY_HOST = "inaudio.guide";
 const char* MY_URL   = "/risposta.json.php";
 
-const char* ID_THING = "Marzoli";
-
 const int HTTPS_PORT = 443;
-const char* FINGERPRINT = "75 C7 6F D2 F0 1D D8 67 C7 50 D7 13 00 50 3E 4D 0C 4D 7D 92";
+const char* FINGERPRINT = "75 c7 6f d2 f0 1d d8 67 c7 50 d7 13 00 50 3e 4d 0c 4d 7d 92";
 
 ESP8266WebServer server(80);
 
@@ -74,12 +72,12 @@ void showForm() {
 
 void ESPrestart() {
   /* riavvia in 6 secondi a patto che PIN di
-      reset (RST) e GPIO16 connessi
-  */
+   *  reset (RST) e GPIO16 connessi
+   */
   ESP.deepSleep(6e6);
 }
 
-void leggiInternetSettings() {
+void leggiInternetSettings(){
   for (int i = 0; i < 26; ++i) {
     // trasforma il byte i-esimo in un char da aggiungere alla stringa
     esid += char(EEPROM.read(i));
@@ -88,10 +86,10 @@ void leggiInternetSettings() {
   for (int i = 26; i < 60; ++i) {
     epass += char(EEPROM.read(i));
   }
-
+  
 }
 
-void connectToInternetAP() {
+void connectToInternetAP(){
   unsigned long timeout = millis();
   WiFi.persistent(false);
   WiFi.mode(WIFI_OFF);
@@ -120,7 +118,7 @@ bool startAP() {
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
-
+  
   EEPROM.begin(128);
 
   bool ok = SPIFFS.begin();
@@ -172,21 +170,20 @@ void loop() {
   }
 
   // se non sono connesso invio al server qualcosa
-  if (WiFi.status() != WL_CONNECTED) {
+  if(WiFi.status() != WL_CONNECTED) {
     digitalWrite(LED_RED, HIGH);
     digitalWrite(LED_GREEN, LOW);
-    // se la Wi-Fi Internet AP fosse irraggiungibile
-    if (WiFi.status() == WL_NO_SSID_AVAIL) {
+    if(WiFi.status() == WL_NO_SSID_AVAIL){
       connectToInternetAP();
     }
     return;
   }
 
   StaticJsonBuffer<200> jsonBuffer;
-
+  
   digitalWrite(LED_RED, LOW);
   digitalWrite(LED_GREEN, HIGH);
-
+  
   WiFiClientSecure client;
 
   if (!client.connect(MY_HOST, HTTPS_PORT)) {
@@ -209,7 +206,8 @@ void loop() {
 
   String url = MY_URL;
   url += "?idiot=";
-  url += ID_THING;
+  // id del device è ESP_secondi24bits_del_MACaddress
+  url += WiFi.hostname();
   url += "&value=";
   url += lux;
 
@@ -248,7 +246,7 @@ void loop() {
   Serial.println(line);
   Serial.println("==========");
   // STOP DEBUG
-
+  
   client.stop();
 
   JsonObject& root = jsonBuffer.parseObject(line);
@@ -261,8 +259,8 @@ void loop() {
 
   String sensor = root["id"];
   int valore = root["valore"];
-
-  if (lux == valore) {
+  
+  if(lux == valore){
     for (int i = 1; i < 11 ; i ++) {
       digitalWrite(LED_GREEN, LOW);
       delay(150);
@@ -270,8 +268,7 @@ void loop() {
       delay(150);
     }
   }
-
+   
   delay(60 * 1000);
 
 }
-
