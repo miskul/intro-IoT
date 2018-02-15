@@ -1,4 +1,6 @@
 # intro-IoT
+Operazioni da eseguire affinché il firmware di connessione al server https con successivo invio della misura eseguita dal fotoresistore possa funzionare.
+
 1) caricare il firmware di scrittura sulla EEPROM di valori di default per il nome del WI-FI internet access point (con la relativa password), nonché per il nome della rete generata dall'ESP in modalità AP e la relativa password (8 caratteri per WPA2);
 2) caricare il firmware di formattazione del FS (1MB SPIFFS);
 3) caricare (mediante il tool di upload accessibile dal menù Strumenti dell'IDE) nel FS eventuali risorse presenti nella directory data del progetto;
