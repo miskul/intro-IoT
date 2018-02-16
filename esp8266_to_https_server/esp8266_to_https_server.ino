@@ -90,7 +90,6 @@ void leggiInternetSettings(){
 }
 
 void connectToInternetAP(){
-  unsigned long timeout = millis();
   WiFi.persistent(false);
   WiFi.mode(WIFI_OFF);
   WiFi.mode(WIFI_STA);
@@ -169,7 +168,7 @@ void loop() {
     return;
   }
 
-  // se non sono connesso invio al server qualcosa
+  // se sono connesso invio al server qualcosa, altrimenti...
   if(WiFi.status() != WL_CONNECTED) {
     digitalWrite(LED_RED, HIGH);
     digitalWrite(LED_GREEN, LOW);
