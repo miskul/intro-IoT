@@ -1,4 +1,5 @@
 #include <EEPROM.h>
+#include <Hash.h>
 
 const char* SS_ID_IAP   = "internetap";
 const char* PASSWD_IAP = "12345678";
@@ -22,7 +23,7 @@ void setup() {
   for(int i = 0; i < s.length(); ++i){
     EEPROM.write(60+i, s[i]);
   }
-  s = PASSWD_WAP;
+  s = sha1(PASSWD_WAP);
   for(int i = 0; i < s.length(); ++i){
     EEPROM.write(86+i, s[i]);
   }
@@ -35,8 +36,7 @@ void loop() {
 }
 
 void clearEEPROM(){
-  // non tutti i 128 perché potremmo avere info utili lì dentro!
-  for (int i = 0; i < 120; ++i) {
+  for (int i = 0; i < 128; ++i) {
     EEPROM.write(i, 0);
   }
   EEPROM.commit();
